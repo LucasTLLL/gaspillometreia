@@ -1,8 +1,11 @@
+import NavBarCantine from "./NavBarCantine"
+import { Outlet } from 'react-router-dom'
 
 const Cantine = () => {
   return (
     <div>
-      Cantine
+      <div><NavBarCantine/></div>
+      <Outlet />
     </div>
   )
 }
