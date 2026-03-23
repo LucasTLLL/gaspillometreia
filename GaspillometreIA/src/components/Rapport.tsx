@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import NavBarCantine from "./NavBarCantine"
 import { useReactToPrint } from "react-to-print";
-
+import * as XLSX from 'xlsx';
 import Aliment from "./Aliment";
 import { Download, Sheet } from "lucide-react";
 
@@ -113,6 +113,25 @@ const rapport = () => {
 
 
 
+  const exportexel =() => {
+
+    const dataexel= data.map((item) =>({
+      "Date ": item.date ? item.date.split("T")[0] : "Inconnue",
+      "Aliment gaspiller ": item.dechet?.dechet_nom || "Inconnue",
+      "Poids (grammes) ": item.poid | 0,
+      
+    }));
+    const feuille = XLSX.utils.json_to_sheet(dataexel);
+    const classeur = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(classeur, feuille,"Historique Gaspillage");
+    XLSX.writeFile(classeur, "Rapport_Gaspillage.xlsx")
+
+
+  
+  }
+
+
+
 
   return (
     <div>
@@ -137,7 +156,7 @@ const rapport = () => {
             <button className="btn btn-accent ml-5" onClick={() => handlePrint()}><Download />Exporter PDF</button>
           </div>
           <div>
-            <button className="btn btn-success ml-5" onClick={() => handlePrint()}><Sheet />Exporter EXEL</button>
+            <button className="btn btn-success ml-5" onClick={() => exportexel()}><Sheet />Exporter EXEL</button>
           </div>
 
         </div>
@@ -150,10 +169,9 @@ const rapport = () => {
       <div ref={componentRef} className="flex flex-col items-center justify-center p-6">
 
 
-           {/* --- SECTION HISTORIQUE DÉTAILLÉ --- */}
+      
       <div className="mt-12 bg-base-100 p-8 rounded-3xl shadow-xl border border-base-300">
         
-        {/* L'en-tête très pro */}
         <div className="mb-8 border-b border-base-200 pb-4">
           <h2 className="text-2xl font-bold text-base-content mb-2">
             État Récapitulatif Journalier
@@ -186,14 +204,14 @@ const rapport = () => {
 
                 return (
                   <tr key={index} className="hover">
-                    <td className="font-mono text-base-content/70">
+                    <td >
                       {datePropre}
                     </td>
-                    <td className="font-semibold capitalize">
+                    <td className="font-semibold ">
                       {item.dechet.dechet_nom}
                     </td>
                     <td className="text-right">
-                      <span className="badge badge-ghost badge-md font-bold font-mono">
+                      <span >
                         {item.poid} g
                       </span>
                     </td>

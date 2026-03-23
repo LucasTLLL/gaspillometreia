@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import Logo from './Logo'
 
 const Login = ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
-  const [username, setUsername] = useState('Lucas')
-  const [password, setPassword] = useState('Tana92i')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,7 +34,15 @@ const Login = ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
 
           
           if (json.data.permission === 0) {
+            navigate('/AdminPanels') 
+          } 
+
+          else if (json.data.permission === 1) {
             navigate('/Tendance') 
+          } 
+
+          else if (json.data.permission === 2) {
+            navigate('/AffichageSelf') 
           } 
 
           else {

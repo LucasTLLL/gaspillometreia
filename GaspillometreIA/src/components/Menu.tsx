@@ -8,27 +8,35 @@ type MenuType = {
     id: number;
     aliment: string;
     qte: string; 
+    date: string;
 }
 
 const Menu = () => {
     const [value, setValue] = useState('')
     const [quantite, setQuantite] = useState('')
+    
     const [menus, setMenus] = useState<MenuType[]>([])
 
     function addMenu() {
         if (value.trim() == "") {
             return
         }
+
+        const datedjour= new Date().toISOString();
+
         const newMenu: MenuType = {
             id: Date.now(),
             aliment: value.trim(),
-            qte: quantite.trim()
+            qte: quantite.trim(),
+            date: datedjour
+            
         }
 
         const newMenus = [newMenu, ...menus]
         setMenus(newMenus)
         setValue('')
         setQuantite('')
+       
     }
 
    

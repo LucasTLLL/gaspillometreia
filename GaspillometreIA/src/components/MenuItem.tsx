@@ -4,6 +4,7 @@ type MenuType = {
     id: number;
     aliment: string;
     qte: string;
+    date: string;
 }
 
 type Props = {
