@@ -1,3 +1,4 @@
+import { useState } from "react";
 
 
 const AffichageSelf = () => {
@@ -7,7 +8,53 @@ const AffichageSelf = () => {
   });
 
 
-  
+
+
+  const [data, setData] = useState<any[]>([]);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const date1 = new Date();
+    const date2 = new Date(date1);
+    date2.setDate(date2.getDate() + 1);
+
+    const rech = date1.toISOString().split('T')[0];
+    const rech2 = date2.toISOString().split('T')[0];
+
+
+    console.log(rech);
+    console.log(rech2);
+
+
+    try {
+      const reponse = await fetch(
+        `http://10.0.200.78:8000/analyse?from_=${rech}&to=${rech2}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (reponse.ok) {
+        const json = await reponse.json();
+        const jsontrie = json.sort((a: any, b: any) => b.poid - a.poid);
+        console.log(json);
+        setData(jsontrie);
+
+
+      } else {
+        console.error("Erreur HTTP :", reponse.status);
+      }
+
+    } catch (erreur) {
+      alert('Impossible de joindre le serveur');
+      console.error(erreur);
+    }
+  };
+
+
 
 
 
@@ -26,7 +73,7 @@ const AffichageSelf = () => {
         <p className="text-center font-semibold text-xl md:text-2xl text-base-content  mb-4 mt-15 ">Aujourd'hui, {dateDuJour}</p>
       </div>
 
-      <div className="justify-center items-center flex flex-col ">
+      <div className="">
         <div className="stats shadow w-full max-4xl ">
 
 
@@ -53,19 +100,45 @@ const AffichageSelf = () => {
 
       <div>
         <div className="text-center font-semibold text-xl md:text-2xl text-base-content mt-15 mb-15">
-          Classement des aliments les plus gaspillés 
+          Classement des aliments les plus gaspillés
+        </div>
+
+        <div className="flex flex-col item-center justify-center">
+
+          <ul className='mt-5  '>
+            {data.map(item => (
+              <li key={item.id}
+                className='mb-5 '
+              >
+                <div className="stats shadow bg-accent">
+                  <div className="stat">
+                    <div className="stat-title">Aliment : {item.dechet.dechet_nom}</div>
+                    <div className="stat-value">Poids : {item.poid} Kg</div>
+                    
+                  </div>
+                </div>
+
+              </li>
+            ))}
+          </ul>
+
         </div>
 
 
 
-        </div>
       </div>
 
 
 
-        
-      
-   
+      <button className="btn btn-accent" onClick={handleSubmit}>TEST</button>
+
+    </div>
+
+
+
+
+
+
   )
 }
 

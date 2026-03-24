@@ -31,6 +31,9 @@ const Aliment = () => {
     const moisFormat = moisSuivant < 10 ? `0${moisSuivant}` : moisSuivant;
     const rech2 = `${anneeSuivante}-${moisFormat}-01`;
 
+    const alimenttotal:Record<string, number>={};
+
+    
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -50,9 +53,34 @@ const Aliment = () => {
 
             if (reponse.ok) {
                 const json = await reponse.json();
-                const jsontrie= json.sort((a:any, b:any) => b.poid - a.poid);
+                
                 console.log(json);
-                setData(jsontrie);
+
+                
+
+                const totalaliment: Record<string, number> = {};
+
+          json.forEach((element: any) => {
+            const aliment = element.dechet.dechet_nom;
+            const poids = element.poid;
+        
+            //Ajout si 2 aliment identique 
+
+          if (totalaliment[aliment]) {
+            totalaliment[aliment] += poids;
+          } else {
+            totalaliment[aliment] = poids;
+          }
+  });
+          const tableau = Object.keys(totalaliment).map((aliment) => {
+            return {
+              name: aliment,
+              value: totalaliment[aliment]
+            };
+          });
+          
+          const jsontrie = tableau.sort((a: any, b: any) => b.value - a.value);
+            setData(jsontrie);
 
 
             } else {
@@ -111,24 +139,27 @@ const Aliment = () => {
 
                     <div className='mt-5'>
 
-                        <h2>Résultats :</h2>
+
 
                         {data.length === 0 && <p>Aucune donnée trouvée.</p>}
 
                         <ul className='mt-5'>
                             {data.map(item => (
                                 <li key={item.id}
-                                className='mb-5'
-                                  >
+                                    className='mb-5'
+                                >
 
 
 
-                                    <strong>Déchet :</strong> {item.dechet.dechet_nom}
-                                    <br />
-                                    <strong>Poids mesuré :</strong> {item.poid} kg<br />
-                                    
-                                    <strong>Date :</strong> {item.date.split('T')[0]}<br />
 
+
+                                    <div className="stats  flex flex-col">
+                                        <div className="stat">
+                                            <div className="stat-title text-center font-bold text-xl">{item.name}</div>
+                                            <div className="stat-value text-center">{item.value} kg</div>
+                                            
+                                        </div>
+                                    </div>
 
                                 </li>
                             ))}
