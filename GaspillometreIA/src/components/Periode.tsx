@@ -7,9 +7,9 @@ const Periode = () => {
 
 
 
-
-  const [dateDebut, setDateDebut] = useState('2026-01-02');
-  const [dateFin, setDateFin] = useState('2026-03-13');
+  const date1 = new Date().toISOString().split('T')[0];
+  const [dateDebut, setDateDebut] = useState('2026-01-01');
+  const [dateFin, setDateFin] = useState(date1);
   const [doneegraphique, setDoneegraphique] = useState<any[]>([]);
 
 

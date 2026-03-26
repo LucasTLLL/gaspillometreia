@@ -1,4 +1,5 @@
 import Aliment from "./Aliment";
+import CoreMenu from "./CoreMenu";
 import NavBarCantine from "./NavBarCantine"
 import Periode from "./Periode";
 
@@ -33,12 +34,12 @@ const tendance = () => {
       
 
 
-            <div className="flex-1 p-8 border-r border-blue-300">
+            <div className="flex-1 p-8 border-">
         <h2 className="text-2xl font-bold text-white bg-accent text-center rounded-xl py-2">
          3. Correspondance menus
         </h2>
-        <div className="mt-50">
-         
+        <div className="mt-5">
+          <CoreMenu/>
         </div>
       </div>
 

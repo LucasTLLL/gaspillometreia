@@ -53,7 +53,7 @@ const Menu = () => {
         <div>
             <div><NavBarCantine /></div>
             <div>  
-                <p className="font-bold text-accent flex justify-center text-4xl m-5">Menu du jours</p>
+                <p className="font-bold text-accent flex justify-center text-4xl m-5">Menu du paf</p>
                 <br />
             </div>
             <div className="flex justify-center gap-2 ml-15 mr-15 md:m-auto">
@@ -71,7 +71,7 @@ const Menu = () => {
                     onChange={(e) => setQuantite(e.target.value)}
                 />
 
-                <button type="submit" className="btn btn-accent ml-2" onClick={addMenu}> <CirclePlus /> Ajouter</button>
+                <button type="submit" className="btn btn-accent ml-2" onClick={addMenu}> <CirclePlus /> Ajouter paf</button>
             </div>
 
             <div className="mt-8 flex justify-center">
@@ -86,7 +86,7 @@ const Menu = () => {
             </div>
 
             <div className="flex justify-center ">
-                <button className="btn btn-success w-50 h-15 mt-5 " onClick={addMenuBDD}> <CloudDownload /> Envoyer au serveur</button>
+                <button className="btn btn-success w-50 h-15 mt-5 " onClick={addMenuBDD}> <CloudDownload /> Envoyer au serveur de paf</button>
             </div>
 
             <div></div>

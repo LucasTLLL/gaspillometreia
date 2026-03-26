@@ -17,7 +17,7 @@ const MenuItem = ({ menu, onDelete }: Props) => {
         <li className="p-3">
             <div className="flex justify-between items-center gap-4">
                 <div className="flex items-center gap-2 font-medium">
-                    {menu.aliment} - {menu.qte} Kg
+                    {menu.aliment} - {menu.qte} Kg de paf
                 </div>
               
                 <button className="btn btn-sm btn-error btn-soft" onClick={onDelete}>

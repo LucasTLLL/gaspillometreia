@@ -7,8 +7,11 @@ import { Download, Sheet } from "lucide-react";
 
 
 const rapport = () => {
+    const date1 = new Date().toISOString().split('T')[0];
 
-  const [date, setDate] = useState('2026-03-19');
+
+
+  const [date, setDate] = useState(date1);
   const [date2, setDate2] = useState('');
   const [data, setData] = useState<any[]>([]);
   const [dataCamember, setDataCamember] = useState<any[]>([]);

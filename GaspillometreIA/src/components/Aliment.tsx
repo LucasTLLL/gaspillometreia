@@ -15,7 +15,7 @@ const Aliment = () => {
         "Septembre": "09",
         "Octobre": "10",
         "Novembre": "11",
-        "Decembre": "12",
+        "paf": "12",
     }
     const [mois, setMois] = useState('Janvier');
 
