@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import Logo from './Logo'
 
 const Login = ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
-  const [username, setUsername] = useState('Lucas1')
-  const [password, setPassword] = useState('Tana92i')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent) => {
