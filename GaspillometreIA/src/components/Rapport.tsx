@@ -11,8 +11,8 @@ const rapport = () => {
 
 
 
-  const [date, setDate] = useState(date1);
-  const [date2, setDate2] = useState('');
+  const [date, setDate] = useState('2026-01-01');
+  const [date2, setDate2] = useState(date1);
   const [data, setData] = useState<any[]>([]);
   const [dataCamember, setDataCamember] = useState<any[]>([]);
   const Couleur = ['#FF78AC',
@@ -40,25 +40,14 @@ const rapport = () => {
       }
 
 
-
-      const datedebut = date.split("T")[0];
-      setDate(datedebut);
-
-
-      const dateObj = new Date(datedebut);
-      dateObj.setDate(dateObj.getDate() + 1);
-
-      const datedemain = dateObj.toISOString().split("T")[0];
-
-      setDate2(datedemain);
-
-      console.log("Date de jours : ", datedebut)
-      console.log("Date de jours d'après : ", datedemain)
+      console.log(date1)
+      console.log(date2)
+  
 
 
       try {
         const reponse = await fetch(
-          `http://10.0.200.78:8000/analyse?from_=${datedebut}&to=${datedemain}`,
+          `http://10.0.200.78:8000/analyse?from_=${date}&to=${date2}`,
           {
             method: 'GET',
             headers: {
@@ -155,6 +144,13 @@ const rapport = () => {
             className="input input-bordered bg-base-100 text-base-content w-full max-w-[160px]"
           />
 
+                    <input
+            type="date"
+            value={date2}
+            onChange={(e) => setDate2(e.target.value)}
+            className="input input-bordered bg-base-100 text-base-content w-full max-w-[160px]"
+          />
+
           <div>
             <button className="btn btn-accent ml-5" onClick={() => handlePrint()}><Download />Exporter PDF</button>
           </div>
@@ -177,7 +173,7 @@ const rapport = () => {
         
         <div className="mb-8 border-b border-base-200 pb-4">
           <h2 className="text-2xl font-bold text-base-content mb-2">
-            État Récapitulatif Journalier
+            État Récapitulatif du {date1.split('T')[0]} au {date2.split('T')[0]}
           </h2>
           <p className="text-base-content/70 italic">
             Ce document présente le relevé journalier détaillé des pertes alimentaires, établi dans le cadre de notre démarche de réduction du gaspillage.
