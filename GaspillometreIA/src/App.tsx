@@ -7,6 +7,8 @@ import Tendance from "./components/Tendance"
 import Rapport from "./components/Rapport"
 import AffichageSelf from "./components/AffichageSelf"
 import AdminPanels from "./components/AdminPanels"
+import LogAdmin from './components/LogAdmin'
+import GestionAdmin from './components/GestionAdmin'
 
 
 function App() {
@@ -42,6 +44,14 @@ function App() {
         <Route
           path="/AdminPanels"
           element={isAuthenticated ? <AdminPanels /> : <Navigate to="/login" />}
+        />
+                <Route
+          path="/GestionAdmin"
+          element={isAuthenticated ? <GestionAdmin /> : <Navigate to="/login" />}
+        />
+                <Route
+          path="/LogAdmin"
+          element={isAuthenticated ? <LogAdmin /> : <Navigate to="/login" />}
         />
 
 
