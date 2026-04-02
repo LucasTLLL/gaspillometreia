@@ -89,7 +89,7 @@ const Menu = () => {
                 <button className="btn btn-success w-50 h-15 mt-5 " onClick={addMenuBDD}> <CloudDownload /> Envoyer au serveur </button>
             </div>
 
-            <div></div>
+            
         </div>
     )
 }

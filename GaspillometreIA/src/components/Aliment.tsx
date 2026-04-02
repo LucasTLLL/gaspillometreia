@@ -17,7 +17,7 @@ const Aliment = () => {
         "Novembre": "11",
         "paf": "12",
     }
-    const [mois, setMois] = useState('Janvier');
+    const [mois, setMois] = useState('');
 
 
     const [data, setData] = useState<any[]>([]);

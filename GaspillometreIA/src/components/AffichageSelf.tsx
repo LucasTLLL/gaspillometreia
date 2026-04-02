@@ -61,77 +61,29 @@ const AffichageSelf = () => {
   return (
 
 
-    <div>
+    <div data-theme="light" className="min-h-screen bg-base-100 w-full flex flex-col items-center pt-10">
 
 
-      <div className="p-10" >
+      <div className="p-4 md:p-10 flex justify-center w-full" >
+        <div className="border border-base-300 shadow-md rounded-3xl p-10 md:p-20 lg:p-24 w-full max-w-[95%] lg:max-w-screen-2xl flex flex-col items-center bg-base-100">
+          <p className="text-center font-bold text-5xl md:text-7xl lg:text-8xl xl:text-[8rem] text-base-content tracking-tight mb-4 uppercase">
+            Gaspillomètre
+          </p>
 
-        <p className="text-center font-bold text-5xl md:text-7xl text-base-content tracking-tight mb-4 mt-15 uppercase">
-          Gaspillometre
-        </p>
-
-        <p className="text-center font-semibold text-xl md:text-2xl text-base-content  mb-4 mt-15 ">Aujourd'hui, {dateDuJour}</p>
-      </div>
-
-      <div className="">
-        <div className="stats shadow w-full max-4xl ">
-
-
-          <div className="stat place-items-center">
-            <div className="stat-title text-2xl">Total gaspiller</div>
-            <div className="stat-value">31K</div>
-            <div className="stat-desc">{dateDuJour}</div>
-          </div>
-
-          <div className="stat place-items-center">
-            <div className="stat-title text-2xl">Equivalent repas </div>
-            <div className="stat-value text-secondary">4,200</div>
-            <div className="stat-desc text-secondary">↗︎ 40 (2%)</div>
-          </div>
-
-          <div className="stat place-items-center">
-            <div className="stat-title text-2xl">Par rapport a hier </div>
-            <div className="stat-value">1,200</div>
-            <div className="stat-desc">↘︎ 90 (14%)</div>
-          </div>
+          <p className="text-center font-semibold text-xl md:text-3xl lg:text-5xl text-base-content/80 mt-8">Aujourd'hui, {dateDuJour}</p>
         </div>
       </div>
 
+      
 
-      <div>
-        <div className="text-center font-semibold text-xl md:text-2xl text-base-content mt-15 mb-15">
-          Classement des aliments les plus gaspillés
-        </div>
-
-        <div className="flex flex-col item-center justify-center">
-
-          <ul className='mt-5  '>
-            {data.map(item => (
-              <li key={item.id}
-                className='mb-5 '
-              >
-                <div className="stats shadow bg-accent">
-                  <div className="stat">
-                    <div className="stat-title">Aliment : {item.dechet.dechet_nom}</div>
-                    <div className="stat-value">Poids : {item.poid} Kg</div>
-                    
-                  </div>
-                </div>
-
-              </li>
-            ))}
-          </ul>
-
-        </div>
+      
 
 
 
-      </div>
 
 
 
-      <button className="btn btn-accent" onClick={handleSubmit}>TEST</button>
-
+     
     </div>
 
 
