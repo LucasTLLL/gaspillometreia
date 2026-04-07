@@ -1,30 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 const AffichageSelf = () => {
 
-  const dateDuJour = new Date().toLocaleDateString('fr-FR', {
+  const [now, setNow] = useState(new Date());
+  const [data, setData] = useState<any[]>([]);
+  const [totalGaspille, setTotalGaspille] = useState<number>(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const dateDuJour = now.toLocaleDateString('fr-FR', {
     weekday: 'long', day: 'numeric', month: 'long'
   });
+  const heure = now.toLocaleTimeString('fr-FR', {
+    hour: '2-digit', minute: '2-digit', second: '2-digit'
+  });
 
-
-
-
-  const [data, setData] = useState<any[]>([]);
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const fetchData = async () => {
     const date1 = new Date();
-    const date2 = new Date(date1);
+    const date2 = new Date();
+    const date3 = new Date();
+    date3.setDate(date3.getDate() - 1);
     date2.setDate(date2.getDate() + 1);
 
     const rech = date1.toISOString().split('T')[0];
     const rech2 = date2.toISOString().split('T')[0];
-
-
-    console.log(rech);
-    console.log(rech2);
-
 
     try {
       const reponse = await fetch(
@@ -39,9 +42,40 @@ const AffichageSelf = () => {
 
       if (reponse.ok) {
         const json = await reponse.json();
-        const jsontrie = json.sort((a: any, b: any) => b.poid - a.poid);
-        console.log(json);
-        setData(jsontrie);
+
+        let somme = 0;
+        const totalaliment: Record<string, number> = {};
+
+        json.forEach((element: any) => {
+          const aliment = element.dechet?.dechet_nom || "Inconnu";
+          const poids = element.poid || 0;
+
+          somme += poids;
+          if (totalaliment[aliment]) {
+            totalaliment[aliment] += poids;
+          } else {
+            totalaliment[aliment] = poids;
+          }
+        });
+
+        const tableau = Object.keys(totalaliment).map((aliment) => ({
+          name: aliment,
+          value: totalaliment[aliment]
+        }));
+
+
+        //a ajouter : moyenne par plateau     
+
+        setTotalGaspille(somme);
+        console.log(somme);
+        console.log(data);
+        console.log(jsontrie);
+        console.log(totalaliment);
+        console.log("Aujourd'hui", date1);
+        console.log("Demain", date2);
+        console.log("Hier", date3);
+        console.log(rech);
+        console.log(rech2);
 
 
       } else {
@@ -59,31 +93,43 @@ const AffichageSelf = () => {
 
 
   return (
+    <div data-theme="light" className="min-h-screen bg-base-100 w-full flex flex-col items-center p-4">
 
-
-    <div data-theme="light" className="min-h-screen bg-base-100 w-full flex flex-col items-center pt-10">
-
-
-      <div className="p-4 md:p-10 flex justify-center w-full" >
-        <div className="border border-base-300 shadow-md rounded-3xl p-10 md:p-20 lg:p-24 w-full max-w-[95%] lg:max-w-screen-2xl flex flex-col items-center bg-base-100">
-          <p className="text-center font-bold text-5xl md:text-7xl lg:text-8xl xl:text-[8rem] text-base-content tracking-tight mb-4 uppercase">
+      <div className="sticky top-4 z-50 w-full flex justify-center px-2">
+        <div className="bg-white/90 backdrop-blur-md shadow-lg border border-gray-200 rounded-2xl px-6 py-3 md:px-12 md:py-5 text-center max-w-2xl w-full">
+          <h1 className="text-2xl md:text-4xl font-extrabold text-gray-800 tracking-wide uppercase">
             Gaspillomètre
+          </h1>
+          <p className="text-xs md:text-base text-gray-500 font-medium mt-1 capitalize">
+            {dateDuJour} - {heure}
           </p>
-
-          <p className="text-center font-semibold text-xl md:text-3xl lg:text-5xl text-base-content/80 mt-8">Aujourd'hui, {dateDuJour}</p>
         </div>
       </div>
 
-      
+      <div className="flex flex-wrap justify-center gap-8 mt-16 w-full text-center">
+        <div className="bg-white/90 p-6 rounded-2xl shadow-sm w-64">
+          <p className="font-bold">Quantité gaspillée aujourd'hui</p>
+          <p className="text-gray-500"> xx Kg</p>
+        </div>
+        <div className="bg-white/90 p-6 rounded-2xl shadow-sm w-64">
+          <p className="font-bold">Quantité moyenne par plateau</p>
+          <p className="text-gray-500"> xx Kg/plateau</p>
+        </div>
+        <div className="bg-white/90 p-6 rounded-2xl shadow-sm w-64">
+          <p className="font-bold">différence avec hier</p>
+          <p className="text-gray-500"> + xx ou - xx</p>
+        </div>
+      </div>
 
-      
 
+      <div className="mt-50">
+        {totalGaspille}
+      </div>
 
+      <div className="mt-15">
+        <button className="btn btn-primary" onClick={fetchData}>Actualiser</button>
+      </div>
 
-
-
-
-     
     </div>
 
 
