@@ -5,50 +5,79 @@ import { CirclePlus, CloudDownload } from "lucide-react";
 
 const GestionAdmin = () => {
 
-
-    type MenuType = {
-        id: number;
-        aliment: string;
-        qte: string;
-        date: string;
-    }
-
-    const [value, setValue] = useState('')
-    const [quantite, setQuantite] = useState('')
-
-    const [menus, setMenus] = useState<MenuType[]>([])
-
-    function addMenu() {
-        if (value.trim() == "") {
-            return
+     
+        const [value, setValue] = useState('')
+        const [quantite, setQuantite] = useState('')
+    
+        const [menus, setMenus] = useState<MenuType[]>([])
+    
+        function addMenu() {
+            if (value.trim() == "") {
+                return
+            }
+    
+            const datedjour = new Date().toISOString().split('T')[0];
+    
+            const newMenu: MenuType = {
+                id: Number(Date.now().toString().slice(-7)),
+                aliment: value.trim(),
+                qte: quantite.trim(),
+                date: datedjour
+    
+            }
+    
+            const newMenus = [newMenu, ...menus]
+            setMenus(newMenus)
+            setValue('')
+            setQuantite('')
+    
         }
-
-        const datedjour = new Date().toISOString();
-
-        const newMenu: MenuType = {
-            id: Date.now(),
-            aliment: value.trim(),
-            qte: quantite.trim(),
-            date: datedjour
-
+    
+    
+        function deleteMenu(id: number) {
+            const newMenus = menus.filter(menu => menu.id !== id);
+            setMenus(newMenus);
         }
+    
+           async function addMenuBDD() {
+        if (menus.length === 0) return;
+        
+        const Token = "hmkr1BG7MuCmdPkFvWVY0Q$ay4u63x0DLPS52r/AYJYTwxLFAH/o9basv5X0EK9itw";
+        const tokenSecurise = encodeURIComponent(Token);
+    
+        for (const menu of menus) {
+          
+          
+          
+    
+          try {
+            const reponse = await fetch(
+              `http://10.0.200.78:8000/insertmenu?id=${menu.id}&aliment=${menu.aliment}&qte=${menu.qte}&date=${menu.date}&rasp=rasp1&token=${tokenSecurise}`,
+              {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json'
+                }
+              }
+            );
+    
+            if (reponse.ok) {
+              console.log(`${menu.aliment} ajouté en BDD !`);
+            } else {
+              console.error(` Erreur serveur pour ${menu.aliment} :`, reponse.status);
+            }
+          } catch (error) {
+            console.error(` Erreur réseau pour ${menu.aliment} :`, error);
+          }
+        }
+    
+     
+        console.log("menu:", menus)
+        alert("Tous les plats ont été envoyés !");
+      }
+    
 
-        const newMenus = [newMenu, ...menus]
-        setMenus(newMenus)
-        setValue('')
-        setQuantite('')
-
-    }
-
-
-    function deleteMenu(id: number) {
-        const newMenus = menus.filter(menu => menu.id !== id);
-        setMenus(newMenus);
-    }
-
-    function addMenuBDD() {
-        console.log(menus)
-    }
+ 
 
 
     return (

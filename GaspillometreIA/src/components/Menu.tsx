@@ -4,17 +4,20 @@ import NavBarCantine from "./NavBarCantine"
 import { useState } from 'react'
 
 
+
 type MenuType = {
     id: number;
     aliment: string;
-    qte: string; 
+    qte: string;
     date: string;
 }
 
 const Menu = () => {
+
+
     const [value, setValue] = useState('')
     const [quantite, setQuantite] = useState('')
-    
+
     const [menus, setMenus] = useState<MenuType[]>([])
 
     function addMenu() {
@@ -22,37 +25,73 @@ const Menu = () => {
             return
         }
 
-        const datedjour= new Date().toISOString();
+        const datedjour = new Date().toISOString().split('T')[0];
 
         const newMenu: MenuType = {
-            id: Date.now(),
+            id: Number(Date.now().toString().slice(-7)),
             aliment: value.trim(),
             qte: quantite.trim(),
             date: datedjour
-            
+
         }
 
         const newMenus = [newMenu, ...menus]
         setMenus(newMenus)
         setValue('')
         setQuantite('')
-       
+
     }
 
-   
+
     function deleteMenu(id: number) {
         const newMenus = menus.filter(menu => menu.id !== id);
         setMenus(newMenus);
     }
 
-    function addMenuBDD(){
-        console.log(menus)
+
+
+
+  async function addMenuBDD() {
+        if (menus.length === 0) return;
+
+        const Token = "hmkr1BG7MuCmdPkFvWVY0Q$ay4u63x0DLPS52r/AYJYTwxLFAH/o9basv5X0EK9itw";
+        const tokenSecurise = encodeURIComponent(Token);
+
+        for (const menu of menus) {
+
+
+
+
+            try {
+                const reponse = await fetch(
+                    `http://10.0.200.78:8000/insertmenu?id=${menu.id}&aliment=${menu.aliment}&qte=${menu.qte}&date=${menu.date}&rasp=rasp1&token=${tokenSecurise}`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    }
+                );
+
+                if (reponse.ok) {
+                    console.log(`${menu.aliment} ajouté en BDD !`);
+                } else {
+                    console.error(` Erreur serveur pour ${menu.aliment} :`, reponse.status);
+                }
+            } catch (error) {
+                console.error(` Erreur réseau pour ${menu.aliment} :`, error);
+            }
+        }
+
+
+        console.log("menu:", menus)
+        alert("Tous les plats ont été envoyés !");
     }
 
     return (
         <div>
             <div><NavBarCantine /></div>
-            <div>  
+            <div>
                 <p className="font-bold text-accent flex justify-center text-4xl m-5">Menu du jour</p>
                 <br />
             </div>
@@ -78,7 +117,7 @@ const Menu = () => {
                 <ul className="divide-y divide-primary/20 w-full max-w-lg">
                     {menus.map((menu) => (
                         <li key={menu.id}>
-                           
+
                             <MenuItem menu={menu} onDelete={() => deleteMenu(menu.id)} />
                         </li>
                     ))}
@@ -89,9 +128,11 @@ const Menu = () => {
                 <button className="btn btn-success w-50 h-15 mt-5 " onClick={addMenuBDD}> <CloudDownload /> Envoyer au serveur </button>
             </div>
 
-            
+
         </div>
     )
 }
 
 export default Menu
+
+

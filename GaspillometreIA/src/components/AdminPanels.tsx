@@ -1,4 +1,4 @@
-import { ShieldAlert, UserCog } from "lucide-react"
+import { UserCog } from "lucide-react"
 import NavBArAdmin from "./NavBArAdmin"
 
 const AdminPanels = () => {

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { PieChart, Pie, Cell } from 'recharts';
 
 const AffichageSelf = () => {
 
@@ -75,7 +74,7 @@ const AffichageSelf = () => {
 
       if (reponse.ok) {
         const json = await reponse.json();
-        
+
 
         const totalaliment: Record<string, number> = {};
 
@@ -96,7 +95,7 @@ const AffichageSelf = () => {
           value: totalaliment[aliment]
         }));
 
-        tableau.sort((a:any, b:any)=> b.value -a.value);
+        tableau.sort((a: any, b: any) => b.value - a.value);
         setData(tableau);
 
 
@@ -111,7 +110,7 @@ const AffichageSelf = () => {
         setMoyenne(moyennear);
 
         setTotalGaspille(somme);
-      
+
         console.log("Somme", somme);
         console.log("Data", json);
         console.log("Nombre de plateau", nbplateau)
@@ -152,10 +151,10 @@ const AffichageSelf = () => {
     }
   };
 
-     const OBJMAX = 800000;
-     const reste = Math.max(0, OBJMAX - totalGaspille);
-
-     const dataJauge = [{name: "Gaspillé", value: totalGaspille}, {name:"Reste", value: reste}];
+const OBJMOY= 30;
+const barremax=60;
+const moyenneNum = Number(moyenne) || 0;
+const pourcentage= Math.min((moyenneNum / barremax) * 100, 100);
 
 
 
@@ -190,61 +189,54 @@ const AffichageSelf = () => {
       </div>
 
 
-      <div className="mt-50">
+      <div className="mt-12">
 
-
-            <div >
-        <h2>Top 3 Gaspillage</h2>
-        
-        {data && data.length > 0 ? (
-          <ul>
-            
-            {data.slice(0, 3).map((item: any, index: number) => (
-              
-              
-              <li key={index}>
-                Numéro {index + 1} : {item.name} - {item.value} g
-              </li>
-              
-            ))}
-          </ul>
-        ) : (
-          <p>Aucune donnée à afficher</p>
-        )}
-      </div>
-
-
-      <div className="mt-16 flex flex-col items-center">
-        <h2 className="text-2xl font-bold mb-4">Objectif du jour : Max {OBJMAX / 1000}Kg</h2>
-        <PieChart width={300} height={150}>
-          <Pie 
-          data={dataJauge} 
-          cx="50%" 
-          cy="100%"
-          startAngle={180}
-          endAngle={0}
-          innerRadius={90}
-          outerRadius={120}
-          dataKey="value"
-          stroke="none">
-
-            <Cell fill='#e5e7eb'/>
-
-          </Pie>
-
-
-        </PieChart>
-
-        <p className="text-3xl font-black mt-[-40px]">{totalGaspille} g</p>
-
-      </div>
 
      
+        <div className="mt-12 w-full text-center">
+          <h2 className="text-2xl font-bold mb-4">Classement des aliments</h2>
 
-
+          {data && data.length > 0 ? (
+            <ul className="space-y-2">
+              {data.slice(0, 3).map((item: any, index: number) => (
+                <li key={index} className="text-xl">
+                  Numéro {index + 1} : <span className="capitalize">{item.name}</span> - {item.value} g
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-gray-500">Aucune donnée à afficher</p>
+          )}
+        </div>
       </div>
+            
+      <div className="mt-16 w-full max-w-2xl mx-auto text-center">
+        <h2 className="text-xl font-bold mb-4 text-gray-800">
+          Objectif du jour : Moins de {OBJMOY} g / plateau
+        </h2>
 
+        <div className="relative w-full h-8 bg-gray-200 rounded-full overflow-hidden shadow-inner">
+          
+          
+          <div 
+            className={`h-full transition-all duration-1000 ${moyenneNum > OBJMOY ? 'bg-red-500' : 'bg-green-500'}`}
+            style={{ width: `${pourcentage}%` }}
+          ></div>
 
+         
+          <div 
+            className="absolute top-0 bottom-0 w-1 bg-black z-10"
+            style={{ left: `${(OBJMOY / barremax) * 100}%` }}
+          ></div>
+          
+        </div>
+
+     
+        <div className="flex justify-between text-sm font-bold text-gray-500 mt-2 px-2">
+          <span>0 g</span>
+          <span>{barremax} g (Max)</span>
+        </div>
+      </div>
 
     </div >
 

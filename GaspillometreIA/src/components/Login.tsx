@@ -14,9 +14,8 @@ const Login = ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
       
      
 
-      const reponse = await fetch(`http://10.0.200.78:8000/connexion`, {
+      const reponse = await fetch(`http://10.0.200.78:8000/connexion?nom=${username}&password=${password}`, {
         method: 'POST',
-        body: JSON.stringify({nom: username, password: password}),
         headers: {
           'Content-Type': 'application/json'
         }
