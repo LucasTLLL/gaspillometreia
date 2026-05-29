@@ -32,6 +32,7 @@ const Login = ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
           onLoginSuccess()
           localStorage.setItem('userToken', json.data.token_data.access_token);
           localStorage.setItem('userRole', json.data.permission.toString());
+          localStorage.setItem('loginTime', Date.now().toString());
 
           if (json.data.permission === 0) {
             navigate('/AdminPanels')
