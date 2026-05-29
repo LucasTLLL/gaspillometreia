@@ -160,7 +160,7 @@ const pourcentage= Math.min((moyenneNum / barremax) * 100, 100);
 
 
   return (
-    <div data-theme="light" className="min-h-screen bg-base-100 w-full flex flex-col items-center p-4">
+    <div data-theme="light" className="min-h-screen bg-base-100 w-full flex flex-col items-center p-6">
 
       <div className="sticky top-4 z-50 w-full flex justify-center px-2">
         <div className="bg-white/90 backdrop-blur-md shadow-lg border border-gray-200 rounded-2xl px-6 py-3 md:px-12 md:py-5 text-center max-w-2xl w-full">
@@ -200,7 +200,7 @@ const pourcentage= Math.min((moyenneNum / barremax) * 100, 100);
             <ul className="space-y-2">
               {data.slice(0, 3).map((item: any, index: number) => (
                 <li key={index} className="text-xl">
-                  Numéro {index + 1} : <span className="capitalize">{item.name}</span> - {item.value} g
+                  Numéro {index + 1} : <span className="capitalize">{item.name}</span> : {item.value} g
                 </li>
               ))}
             </ul>

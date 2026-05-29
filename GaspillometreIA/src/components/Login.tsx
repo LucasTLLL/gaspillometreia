@@ -30,6 +30,7 @@ const Login = ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
        
         if (json.erreur === 0) {
           onLoginSuccess()
+          localStorage.setItem('userToken', json.data.token_data.access_token);
 
           
           if (json.data.permission === 0) {

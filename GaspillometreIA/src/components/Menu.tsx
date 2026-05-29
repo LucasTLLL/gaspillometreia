@@ -54,7 +54,7 @@ const Menu = () => {
   async function addMenuBDD() {
         if (menus.length === 0) return;
 
-        const Token = "hmkr1BG7MuCmdPkFvWVY0Q$ay4u63x0DLPS52r/AYJYTwxLFAH/o9basv5X0EK9itw";
+        const Token = localStorage.getItem('userToken') || "";
         const tokenSecurise = encodeURIComponent(Token);
 
         for (const menu of menus) {
