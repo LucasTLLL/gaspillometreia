@@ -1,4 +1,9 @@
+/* Importation du framework Tailwind CSS pour l'accès aux classes utilitaires */
 @import "tailwindcss";
+
+/* Intégration du plugin DaisyUI pour bénéficier des composants pré-stylisés */
 @plugin "daisyui" {
-  themes: business,light ;
+  /* Déclaration des thèmes globaux activés sur l'application 
+     (business pour le mode sombre, light pour le mode clair) */
+  themes: business, light;
 }

@@ -3,17 +3,19 @@ import { useNavigate } from 'react-router-dom'
 import Logo from './Logo'
 
 const Login = ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
+  // Déclaration des states pour récupérer les saisies du formulaire
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  
+  // Hook pour gérer les redirections
   const navigate = useNavigate()
 
+  // Fonction asynchrone déclenchée à la soumission
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault() // Empêche le rechargement par défaut de la page
 
     try {
-
-
-
+      // Appel API pour l'authentification
       const reponse = await fetch(`http://10.0.200.78:8000/connexion?nom=${username}&password=${password}`, {
         method: 'POST',
         headers: {
@@ -21,44 +23,44 @@ const Login = ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
         }
       })
 
-
-
-
+      // Si la requête HTTP aboutit
       if (reponse.ok) {
         const json = await reponse.json()
 
-
+        // Vérification du code d'erreur de l'API (0 = succès)
         if (json.erreur === 0) {
-          onLoginSuccess()
+          onLoginSuccess() // Validation de la connexion côté parent
+          
+          // Stockage des données de session côté client
           localStorage.setItem('userToken', json.data.token_data.access_token);
           localStorage.setItem('userRole', json.data.permission.toString());
           localStorage.setItem('loginTime', Date.now().toString());
 
+          // Routing dynamique selon le niveau de permission (0=Admin, 1=Tendance, 2=Affichage)
           if (json.data.permission === 0) {
             navigate('/AdminPanels')
-          }
-
+          } 
           else if (json.data.permission === 1) {
             navigate('/Tendance')
-          }
-
+          } 
           else if (json.data.permission === 2) {
             navigate('/AffichageSelf')
-          }
-
+          } 
           else {
             alert("Tu n'as pas la permission d'accéder au site.")
           }
         } else {
-
+          // Gestion des erreurs d'authentification
           alert('Identifiants ou mot de passe incorrects')
         }
       }
     } catch (erreur) {
+      // Gestion de l'erreur si le serveur est injoignable
       alert('Impossible de joindre le serveur')
     }
   }
 
+  // Rendu de l'interface utilisateur
   return (
     <div className='bg-[url(/src/assets/bg2.jpeg)] bg-cover bg-center bg-no-repeat min-h-screen p-20'>
       <div
@@ -66,7 +68,6 @@ const Login = ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
              bg-black/60 p-8 rounded-xl 
              max-w-md mx-auto"
       >
-
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white ">
             <Logo />
@@ -118,9 +119,7 @@ const Login = ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
           </form>
         </div>
       </div>
-
     </div>
-
   )
 }
 
