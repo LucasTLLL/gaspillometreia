@@ -1,0 +1,94 @@
+{
+  "id": "1c0f4f7f-8fca-475a-8cff-80170b764931",
+  "version": "2.0",
+  "name": "Gaspillometre-Tests",
+  "url": "https://10.0.200.78",
+  "tests": [{
+    "id": "c0020608-5fcb-4e2d-b28d-07663eb35a23",
+    "name": "TEST-CONNEXION",
+    "commands": [{
+      "id": "3534a9a7-5f93-4442-b2a2-eaadb4319ea3",
+      "comment": "",
+      "command": "open",
+      "target": "/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "71fc7f05-25ae-46a7-b960-ab0163593e0d",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1070x1063",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7c1d9344-e2c5-40f4-9faa-de0dfc7c3cec",
+      "comment": "",
+      "command": "click",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div[2]/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4c64f41d-696a-4e52-a4b2-08fe0b198a63",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div[2]/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Lucas"
+    }, {
+      "id": "00ba96ce-acd4-4c0a-a1af-226ebd131272",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div[2]/form/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "123456"
+    }, {
+      "id": "79c4714d-1a89-4bf2-a207-e4e5c8551e3e",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div[2]/form/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "8b3cde1e-c69a-42c9-ae9f-6dd9467cf7f1",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "Impossible de joindre le serveur",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "c5e88e8e-2389-4016-9514-64268a19a565",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["c0020608-5fcb-4e2d-b28d-07663eb35a23"]
+  }],
+  "urls": ["https://10.0.200.78/"],
+  "plugins": []
+}
