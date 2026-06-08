@@ -5,7 +5,7 @@ import sys
 from datetime import datetime
 
 # Configuration
-RASP_ID = "rasp1"
+RASP_ID = "1"
 PASS_TOKEN = "b8c95e1a-18a6-11f1-a5d2-423b83e4d33c"
 URL_BASE = "http://10.0.200.78:8000"
 
